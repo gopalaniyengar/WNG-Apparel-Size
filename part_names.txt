@@ -1,0 +1,82 @@
+TIMES: [MODEL: 4614.14990234, SHOULDERS: 3612.26259766, HIPS: 934.89238281, LEGS: 378.99189453]
+
+leftHip: Index 11
+rightHip: Index 12
+leftAnkle: Index 15
+rightAnkle: Index 16
+
+['nose', 'leftEye', 'rightEye', 'leftEar', 'rightEar',
+'leftShoulder', 'rightShoulder', 'leftElbow', 'rightElbow',
+'leftWrist', 'rightWrist', 'leftHip', 'rightHip',
+'leftKnee', 'rightKnee', 'leftAnkle', 'rightAnkle']
+
+17
+
+[
+    'left_face',
+    'right_face',
+    'left_upper_arm_front',
+    'left_upper_arm_back',
+    'right_upper_arm_front',
+    'right_upper_arm_back',
+    'left_lower_arm_front',
+    'left_lower_arm_back',
+    'right_lower_arm_front',
+    'right_lower_arm_back',
+    'left_hand',
+    'right_hand',
+    'torso_front',
+    'torso_back',
+    'left_upper_leg_front',
+    'left_upper_leg_back',
+    'right_upper_leg_front',
+    'right_upper_leg_back',
+    'left_lower_leg_front',
+    'left_lower_leg_back',
+    'right_lower_leg_front',
+    'right_lower_leg_back',
+    'left_feet',
+    'right_feet'
+]
+
+
+# import os
+""" python -m tf_bodypix list-models:
+https://storage.googleapis.com/tfjs-models/savedmodel/bodypix/mobilenet/float/050/model-stride16.json
+https://storage.googleapis.com/tfjs-models/savedmodel/bodypix/mobilenet/float/050/model-stride8.json
+https://storage.googleapis.com/tfjs-models/savedmodel/bodypix/mobilenet/float/075/model-stride16.json
+https://storage.googleapis.com/tfjs-models/savedmodel/bodypix/mobilenet/float/075/model-stride8.json
+https://storage.googleapis.com/tfjs-models/savedmodel/bodypix/mobilenet/float/100/model-stride16.json
+https://storage.googleapis.com/tfjs-models/savedmodel/bodypix/mobilenet/float/100/model-stride8.json
+https://storage.googleapis.com/tfjs-models/savedmodel/bodypix/mobilenet/quant1/050/model-stride16.json
+https://storage.googleapis.com/tfjs-models/savedmodel/bodypix/mobilenet/quant1/050/model-stride8.json
+https://storage.googleapis.com/tfjs-models/savedmodel/bodypix/mobilenet/quant1/075/model-stride16.json
+https://storage.googleapis.com/tfjs-models/savedmodel/bodypix/mobilenet/quant1/075/model-stride8.json
+https://storage.googleapis.com/tfjs-models/savedmodel/bodypix/mobilenet/quant1/100/model-stride16.json
+https://storage.googleapis.com/tfjs-models/savedmodel/bodypix/mobilenet/quant1/100/model-stride8.json
+https://storage.googleapis.com/tfjs-models/savedmodel/bodypix/mobilenet/quant2/050/model-stride16.json
+https://storage.googleapis.com/tfjs-models/savedmodel/bodypix/mobilenet/quant2/050/model-stride8.json
+https://storage.googleapis.com/tfjs-models/savedmodel/bodypix/mobilenet/quant2/075/model-stride16.json
+https://storage.googleapis.com/tfjs-models/savedmodel/bodypix/mobilenet/quant2/075/model-stride8.json
+https://storage.googleapis.com/tfjs-models/savedmodel/bodypix/mobilenet/quant2/100/model-stride16.json
+https://storage.googleapis.com/tfjs-models/savedmodel/bodypix/mobilenet/quant2/100/model-stride8.json
+https://storage.googleapis.com/tfjs-models/savedmodel/bodypix/resnet50/float/model-stride16.json
+https://storage.googleapis.com/tfjs-models/savedmodel/bodypix/resnet50/float/model-stride32.json
+https://storage.googleapis.com/tfjs-models/savedmodel/bodypix/resnet50/quant1/model-stride16.json
+https://storage.googleapis.com/tfjs-models/savedmodel/bodypix/resnet50/quant1/model-stride32.json
+https://storage.googleapis.com/tfjs-models/savedmodel/bodypix/resnet50/quant2/model-stride16.json
+https://storage.googleapis.com/tfjs-models/savedmodel/bodypix/resnet50/quant2/model-stride32.json
+"""
+
+# https://blog.tensorflow.org/2019/11/updated-bodypix-2.html
+# https://pypi.org/project/tf-bodypix/
+
+# command to run
+
+# python -m tf_bodypix draw-mask --model-path "https://storage.googleapis.com/tfjs-models/savedmodel/bodypix/resnet50/quant2/model-stride16.json" --source "D:\Python Projects\BodyPix\pose5.jpg" --output "D:\Python Projects\BodyPix\pose5_output.jpg" --threshold=0.875 --mask-alpha=0.5 --color
+
+# python -m tf_bodypix draw-mask --model-path "https://storage.googleapis.com/tfjs-models/savedmodel/bodypix/resnet50/quant2/model-stride16.json" --source "D:\Python Projects\BodyPix\pose5.jpg" --output "D:\Python Projects\BodyPix\pose5_output.jpg" --threshold=0.875 --mask-alpha=0.8 --parts torso_front right_upper_arm_front left_upper_arm_front left_upper_arm_back right_upper_arm_back
+# add --color to above if want colored parts
+
+# os.system("python -m tf_bodypix draw-mask --model-path 'https://storage.googleapis.com/tfjs-models/savedmodel/bodypix/resnet50/quant2/model-stride16.json' --source 'D:\Python Projects\BodyPix\pose5.jpg' --output 'D:\Python Projects\BodyPix\pose5_output.jpg' --threshold=0.875 --mask-alpha=0.8 --parts torso_front right_upper_arm_front left_upper_arm_front left_upper_arm_back right_upper_arm_back")
+
