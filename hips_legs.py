@@ -48,7 +48,7 @@ def get_legs(img_src, model, threshold=0.8, stats=1, show=0, hght=160):
 
     img = cv2.imread(img_src)
     poseposn = output_img(src=img_src, model=model, thresh=threshold, pose_flag=1)
-    fullbody = output_img(src=img_src, model=model, thresh=threshold, part_flag=0, outline=1)
+    fullbody = output_img(src=img_src, model=model, thresh=threshold, outline=1)
 
     rank = np.array(poseposn[right['Ankle']])
     rhip = np.array(poseposn[right['Hip']])

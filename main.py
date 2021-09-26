@@ -6,14 +6,33 @@ from helper import get_model, show_img
 from hips_legs import get_hips, get_legs
 from shoulder import get_shoulders
 
-""" CAN OPTIMIZE SHOULDER"""
+"""CAN OPTIMIZE SHOULDER"""
 
 
 def ms():
+    """
+    Arguments: None
+    Description: Returns time in millisecond
+    Returns: Time in millisecond
+    """
+
     return time.time_ns() / (10 ** 6)
 
 
 def get_measurements(src, height, time_flag=0):
+    """
+        Arguments:
+            src---> Absolute path of input image
+            height---> Height of person in image
+            time_flag---> If enabled, calculates execution time of function
+
+        Description: Calculates shoulder, hip and leg measurements if time_flag disabled, execution time if enabled
+
+        Returns:
+            time_flag == 0: shoulder_measure, hip_measure, leg_measure
+            time_flag == 1: model call time, shoulder exec. time, hip exec. time, leg exec. time
+    """
+
     tm1 = ms()
     bodypix = get_model()
     tm2 = ms()

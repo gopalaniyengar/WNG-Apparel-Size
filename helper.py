@@ -7,6 +7,16 @@ import numpy as np
 
 
 def show_img(img, label):
+    """
+        Arguments:
+            img---> Input image
+            label---> Corresponding label to be shown
+
+        Description: Displays image in '300 width x 700 height' frame
+
+        Returns: None
+    """
+
     im2 = cv2.resize(img, (300, 700))
     # im2 = img
     cv2.imshow(label, im2)
@@ -14,16 +24,51 @@ def show_img(img, label):
 
 
 def get_model():
+    """
+        Arguments: None
+
+        Description: Downloads BodyPix model Python version
+
+        Returns: bodypix_model
+    """
+
     bodypix_model = load_model(download_model(
         "https://storage.googleapis.com/tfjs-models/savedmodel/bodypix/resnet50/float/model-stride16.json"))
     return bodypix_model
 
 
 def gray(img):
+    """
+        Arguments:
+           img---> Input image
+
+        Description: Color to grayscale conversion of image
+
+        Returns: Grayscale image version of input
+    """
+
     return cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
 
 def output_img(src, model, thresh=0.8, part_flag=0, parts=None, outline=0, show=0, pose_flag=0):
+    """
+        Arguments:
+            src---> Absolute path of input image
+            model---> BodyPix model
+            thresh---> Model predictions confidence threshold, i.e. predicts points with [confidence >= thresh], 0.8 by default
+            part_flag---> If enabled, predicts locations of only those parts given in 'parts', disabled by default
+            parts---> List of parts to predict {see 'part_names.txt'}, set to 'None' by default
+            outline---> If enabled, gives white filled areas corresponding to predicted parts, disabled by default
+            show---> If enabled, displays the predicted output, be it part segmentations, or the detected pose, disabled by default
+            pose_flag---> If enabled, gets model's predicted poses on the image
+
+        Description: Gets various types of outputs out of model on an imput image
+
+        Returns:
+            pose_flag == 0: part---> Output image containing required body parts, white-filled if 'outline' is enabled
+            pose_flag == 1: partpos---> List of pixels corresponding to the locations of the key-points predicted by model {see 'part_names.txt'}
+    """
+
     if parts is None:
         parts = []
     img = cv2.imread(src)
@@ -38,7 +83,7 @@ def output_img(src, model, thresh=0.8, part_flag=0, parts=None, outline=0, show=
     if outline == 1:
         part = cv2.bitwise_or(part, white, mask=mask)
 
-    if show == 1:
+    if pose_flag != 1 and show == 1:
         show_img(img, 'image')
         show_img(part, 'prediction')
 
@@ -69,6 +114,18 @@ def output_img(src, model, thresh=0.8, part_flag=0, parts=None, outline=0, show=
 
 
 def drawpts(img, u=None, d=None, l=None, r=None, color=0):
+    """
+        Arguments:
+            img---> Input image
+            u, d, l, r---> Upper, Lower, Left, Right points
+            color---> If enabled, draws black non-contrasting line, disabled by default
+
+        Description: Draws two pairs of points(u,d and l,r), and lines connecting those pairs
+
+        Returns:
+            res---> Output image
+    """
+
     res = img
     orng = [0, 69, 255]
     grn = [34, 139, 34]
@@ -92,9 +149,5 @@ def drawpts(img, u=None, d=None, l=None, r=None, color=0):
 
 if __name__ == '__main__':
     img_source = "D:\Python Projects\BodyPix\TA Poses\\normal5.jpg"
-
-    _ = output_img(src=img_source, model=get_model(), thresh=0.8, part_flag=0, parts=[], outline=0, show=1,
-                   pose_flag=1)
-    print(_, '\n', len(_))
-
-    pass
+    foo = output_img(src=img_source, model=get_model(), thresh=0.8, part_flag=0, parts=[], outline=0, show=1,
+                     pose_flag=1)
