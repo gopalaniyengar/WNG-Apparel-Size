@@ -62,7 +62,7 @@ def output_img(src, model, thresh=0.8, part_flag=0, parts=None, outline=0, show=
             show---> If enabled, displays the predicted output, be it part segmentations, or the detected pose, disabled by default
             pose_flag---> If enabled, gets model's predicted poses on the image
 
-        Description: Gets various types of outputs out of model on an imput image
+        Description: Gets various types of outputs out of model on an input image
 
         Returns:
             pose_flag == 0: part---> Output image containing required body parts, white-filled if 'outline' is enabled

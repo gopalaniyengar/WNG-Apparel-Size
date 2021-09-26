@@ -6,8 +6,6 @@ from helper import get_model, show_img
 from hips_legs import get_hips, get_legs
 from shoulder import get_shoulders
 
-"""CAN OPTIMIZE SHOULDER"""
-
 
 def ms():
     """
