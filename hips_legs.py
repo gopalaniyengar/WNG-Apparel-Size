@@ -4,8 +4,22 @@ from helper import get_model, output_img, show_img, gray, drawpts
 from shoulder import extremeud, dist
 
 
-def get_hips(img_src, model, threshold=0.8, stats=1, show=0, hght=160):
-    # model = get_model()
+def get_hips(img_src, model, threshold=0.8, stats=0, show=0, hght=160):
+    """
+        Arguments:
+            img_src---> Absolute path of input image
+            model---> BodyPix model
+            threshold---> Model predictions confidence threshold, i.e. predicts points with [confidence >= thresh], 0.8 by default
+            stats---> If enabled, displays prediction process in more detail, disabled by default
+            show---> If enabled, displays predicted images, disabled by default
+            hght---> The actual height of the person in image, input by user, 160cm by default
+
+        Description: Gets hip (across, not around) measurement of person given height
+
+        Returns:
+            hipwidth---> Hip width measurement
+    """
+
     right = ['right_upper_leg_front', 'right_upper_leg_back', 'right_lower_leg_front', 'right_lower_leg_back',
              'right_feet']
     left = ['left_upper_leg_front', 'left_upper_leg_back', 'left_lower_leg_front', 'left_lower_leg_back', 'left_feet']
@@ -41,8 +55,22 @@ def get_hips(img_src, model, threshold=0.8, stats=1, show=0, hght=160):
     return hipwidth
 
 
-def get_legs(img_src, model, threshold=0.8, stats=1, show=0, hght=160):
-    # model = get_model()
+def get_legs(img_src, model, threshold=0.8, stats=0, show=0, hght=160):
+    """
+        Arguments:
+            img_src---> Absolute path of input image
+            model---> BodyPix model
+            threshold---> Model predictions confidence threshold, i.e. predicts points with [confidence >= thresh], 0.8 by default
+            stats---> If enabled, displays prediction process in more detail, disabled by default
+            show---> If enabled, displays predicted images, disabled by default
+            hght---> The actual height of the person in image, input by user, 160cm by default
+
+        Description: Gets leg length measurement of person given height
+
+        Returns:
+            leglength---> Leg length measurement
+    """
+
     right = {'Ankle': 16, 'Hip': 12}
     left = {'Ankle': 15, 'Hip': 11}
 

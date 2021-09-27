@@ -22,7 +22,7 @@ def get_measurements(src, height, time_flag=0):
         Arguments:
             src---> Absolute path of input image
             height---> Height of person in image
-            time_flag---> If enabled, calculates execution time of function
+            time_flag---> If enabled, calculates execution time of function, not for end user, for dev
 
         Description: Calculates shoulder, hip and leg measurements if time_flag disabled, execution time if enabled
 

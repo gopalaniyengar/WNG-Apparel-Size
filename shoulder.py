@@ -4,10 +4,30 @@ from helper import get_model, output_img, show_img, gray, drawpts
 
 
 def dist(a, b):
+    """
+        Arguments:
+            a, b---> Two pixel points
+
+        Description: Calculates Euclidean distance between two points
+
+        Returns:
+            Length of line connecting a and b
+    """
+
     return np.sqrt(np.sum(np.square(a - b)))
 
 
 def extremelr(img):
+    """
+        Arguments:
+            img---> Input image (output of segmentation model with outline enabled)
+
+        Description: Finds the left-most and right-most white points in the image
+
+        Returns:
+            lpt, rpt---> Extreme horizontal white points in (width,height) format
+    """
+
     h = img.shape[0]
     w = img.shape[1]
     min = w - 1
@@ -29,6 +49,16 @@ def extremelr(img):
 
 
 def extremeud(img):
+    """
+        Arguments:
+            img---> Input image (output of segmentation model with outline enabled)
+
+        Description: Finds the top-most and bottom-most white points in the image
+
+        Returns:
+            upt, dpt---> Extreme vertical white points in (width,height) format
+    """
+
     h = img.shape[0]
     w = img.shape[1]
     upt, dpt = [0, 0], [0, 0]
@@ -46,8 +76,22 @@ def extremeud(img):
     return upt, dpt
 
 
-def get_shoulders(img_src, model, threshold=0.8, stats=1, show=0, hght=160):  # height in cm
-    # model = get_model()
+def get_shoulders(img_src, model, threshold=0.8, stats=0, show=0, hght=160):  # height in cm
+    """
+        Arguments:
+            img_src---> Absolute path of input image
+            model---> BodyPix model
+            threshold---> Model predictions confidence threshold, i.e. predicts points with [confidence >= thresh], 0.8 by default
+            stats---> If enabled, displays prediction process in more detail, disabled by default
+            show---> If enabled, displays predicted images, disabled by default
+            hght---> The actual height of the person in image, input by user, 160cm by default
+
+        Description: Gets shoulder measurement of person given height
+
+        Returns:
+            shmeasurement---> Shoulder width measurement
+    """
+
     parts = ['torso_front']
 
     img = cv2.imread(img_src)
