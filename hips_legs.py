@@ -1,14 +1,17 @@
 import numpy as np
 import cv2
 from helper import get_model, output_img, show_img, gray, drawpts
-from shoulder import extremeud, dist
+from shoulder import extremeud_alt, dist
 
 
-def get_hips(img_src, model, threshold=0.8, stats=0, show=0, hght=160):
+def get_hips(img_src, model, fullbody, u, d, threshold=0.8, stats=0, show=0, hght=160):
     """
         Arguments:
             img_src---> Absolute path of input image
             model---> BodyPix model
+            fullbody---> Full body segmented image
+            u---> Top-most point of fullbody
+            d---> Bottom-most point of fullbody
             threshold---> Model predictions confidence threshold, i.e. predicts points with [confidence >= thresh], 0.8 by default
             stats---> If enabled, displays prediction process in more detail, disabled by default
             show---> If enabled, displays predicted images, disabled by default
@@ -29,11 +32,11 @@ def get_hips(img_src, model, threshold=0.8, stats=0, show=0, hght=160):
                           show=0)
     right_leg = output_img(src=img_src, model=model, thresh=threshold, part_flag=1, parts=right, outline=1,
                            show=0)
-    fullbody = output_img(src=img_src, model=model, thresh=threshold, part_flag=0, outline=1)
+    # fullbody = output_img(src=img_src, model=model, thresh=threshold, part_flag=0, outline=1)
 
-    top_left, bl = np.array(extremeud(gray(left_leg)))
-    top_right, br = np.array(extremeud(gray(right_leg)))
-    tmax, bmax = np.array(extremeud(gray(fullbody)))
+    top_left, bl = np.array(extremeud_alt(gray(left_leg)))
+    top_right, br = np.array(extremeud_alt(gray(right_leg)))
+    tmax, bmax = u, d
 
     hiplen = dist(top_left, top_right)
     height = dist(tmax, bmax)
@@ -48,18 +51,21 @@ def get_hips(img_src, model, threshold=0.8, stats=0, show=0, hght=160):
 
     if show == 1:
         out1 = drawpts(img, tmax, bmax, top_left, top_right)
-        out2 = drawpts(fullbody, tmax, bmax, top_left, top_right)
+        out2 = drawpts(fullbody.copy(), tmax, bmax, top_left, top_right)
         show_img(out1, 'original')
         show_img(out2, 'outline')
 
     return hipwidth
 
 
-def get_legs(img_src, model, threshold=0.8, stats=0, show=0, hght=160):
+def get_legs(img_src, model, fullbody, u, d, threshold=0.8, stats=0, show=0, hght=160):
     """
         Arguments:
             img_src---> Absolute path of input image
             model---> BodyPix model
+            fullbody---> Full body segmented image
+            u---> Top-most point of fullbody
+            d---> Bottom-most point of fullbody
             threshold---> Model predictions confidence threshold, i.e. predicts points with [confidence >= thresh], 0.8 by default
             stats---> If enabled, displays prediction process in more detail, disabled by default
             show---> If enabled, displays predicted images, disabled by default
@@ -76,13 +82,13 @@ def get_legs(img_src, model, threshold=0.8, stats=0, show=0, hght=160):
 
     img = cv2.imread(img_src)
     poseposn = output_img(src=img_src, model=model, thresh=threshold, pose_flag=1)
-    fullbody = output_img(src=img_src, model=model, thresh=threshold, outline=1)
+    # fullbody = output_img(src=img_src, model=model, thresh=threshold, outline=1)
 
     rank = np.array(poseposn[right['Ankle']])
     rhip = np.array(poseposn[right['Hip']])
     lank = np.array(poseposn[left['Ankle']])
     lhip = np.array(poseposn[left['Hip']])
-    tmax, bmax = np.array(extremeud(gray(fullbody)))
+    tmax, bmax = u, d
 
     height = dist(tmax, bmax)
     ratio_left = dist(lank, lhip) / height

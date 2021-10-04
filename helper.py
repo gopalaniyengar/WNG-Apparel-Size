@@ -6,7 +6,7 @@ import cv2
 import numpy as np
 
 
-def show_img(img, label):
+def show_img(img, label='default label'):
     """
         Arguments:
             img---> Input image
