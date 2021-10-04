@@ -6,5 +6,5 @@ Requirements:
 2. cv2 (opencv-python)
 3. BodyPix (pip install tf-bodypix[all])
 
-Functions in shoulder.py yet to be optimized wrt execution time.
+Check part_manes.txt for more info
 
